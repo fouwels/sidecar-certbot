@@ -1,0 +1,47 @@
+version: "2.0"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    mem_limit: 500mb
+    volumes:
+      - ./config/nginx:/etc/nginx:ro
+      - certbot_data:/etc/letsencrypt:ro
+      - certbot_www:/var/www/certbot:ro
+    expose:
+      - "443"
+      - "80"
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - proxynet
+
+  certbot:
+    restart: unless-stopped
+    mem_limit: 500mb
+    build: ./certbot
+    image: registry2.lagoni.co.uk/lagoni-engineering/certbot:dev
+    environment:
+      EMAIL: "kaelan@fouwels.com"
+      DOMAINS: "-d testing.fouwels.app"
+      #STAGING: "--staging" [Enable to run certbot in staging (fake) cert mode, and prevent rate limiting]
+    volumes:
+      - certbot_data:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    networks:
+      - proxynet
+
+  demo:
+    restart: unless-stopped
+    mem_limit: 500mb
+    image: nginxdemos/hello
+    networks:
+      - proxynet
+
+volumes:
+  certbot_data:
+  certbot_www:
+
+networks:
+  proxynet:
