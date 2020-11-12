@@ -11,7 +11,6 @@ fi
 CERTNAME=master
 PATH="/etc/letsencrypt/live/$CERTNAME"
 
-
 if [ ! -d "$PATH" ]; then
     echo "> $PATH does not exist, initializing certbot"
 
@@ -32,10 +31,4 @@ else
     echo "> $PATH exists, skipping certbot initialization"
 fi
 
-while true; do
-    echo "> Renewing certbot"
-    /usr/bin/certbot $STAGING renew 
-    
-    echo "> Sleeping for 12h"
-    /bin/sleep 12h
-done
+exec "$@"
