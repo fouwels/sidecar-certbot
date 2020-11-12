@@ -1,4 +1,4 @@
-from certbot/certbot
+FROM certbot/certbot:v1.9.0
 
 RUN apk update && apk add --no-cache openssl certbot
 
