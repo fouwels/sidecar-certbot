@@ -5,9 +5,11 @@
 
 FROM alpine:3.14.0
 
-RUN apk add --no-cache openssl python3 py3-pip augeas musl-dev python3-dev libffi-dev openssl-dev cargo py3-wheel
+RUN apk add --no-cache openssl python3 augeas
 
-RUN pip3 install certbot
+RUN apk add --virtual .build py3-pip musl-dev python3-dev libffi-dev openssl-dev cargo py3-wheel && \
+    pip3 --no-cache-dir install certbot && \
+    apk del .build
 
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x ./entrypoint.sh
