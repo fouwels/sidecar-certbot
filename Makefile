@@ -1,4 +1,9 @@
-COMPOSE=docker-compose
+
+# certbot# SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+#
+# SPDX-License-Identifier: MIT
+
+COMPOSE=compose-cli compose
 STACKFILE= -f nginx.yml
 
 .PHONY: pull, up, up-d, down, down-v, logs
