@@ -17,7 +17,7 @@ if [ ! -d "$PATH" ]; then
     echo "> Creating dummy certificates in $PATH"
     /bin/mkdir -p $PATH
     /usr/bin/openssl req -x509 -nodes -newkey rsa:2048 -days 1 -keyout "$PATH/privkey.pem" -out "$PATH/fullchain.pem" -subj '/CN=localhost'
-    
+
     echo "> Sleeping 10s to allow NGINX to start"
     /bin/sleep 10s
 
@@ -25,8 +25,8 @@ if [ ! -d "$PATH" ]; then
     /bin/rm -rf $PATH
 
     echo "> Requesting TLS certificates into $PATH"
-    /usr/bin/certbot certonly $STAGING --keep-until-expiring --rsa-key-size 4096 --webroot -w /var/www/certbot --email $EMAIL --agree-tos --non-interactive --cert-name $CERTNAME $DOMAINS
-    
+    /usr/bin/certbot certonly $STAGING --keep-until-expiring --rsa-key-size 3076 --webroot -w /var/www/certbot --email $EMAIL --agree-tos --non-interactive --cert-name $CERTNAME $DOMAINS
+
 else
     echo "> $PATH exists, skipping certbot initialization"
 fi
