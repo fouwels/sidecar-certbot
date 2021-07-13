@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 COMPOSE=compose-cli compose
-STACKFILE= -f nginx.yml
+STACKFILE= -f stack.yml
 
 .PHONY: pull, up, up-d, down, down-v, logs
 

@@ -14,22 +14,22 @@ fi
 
 CERTNAME=master
 PATH="/etc/letsencrypt/live/$CERTNAME"
+/bin/mkdir -p $PATH
 
-if [ ! -d "$PATH" ]; then
-    echo "> $PATH does not exist, initializing certbot"
+if [ ! -f "$PATH/fullchain.pem" ]; then
+    echo "> $PATH/fullchain.pem does not exist, initializing certbot"
 
     echo "> Creating dummy certificates in $PATH"
-    /bin/mkdir -p $PATH
-    /usr/bin/openssl req -x509 -nodes -newkey rsa:2048 -days 1 -keyout "$PATH/privkey.pem" -out "$PATH/fullchain.pem" -subj '/CN=localhost'
+    /usr/bin/openssl req -x509 -nodes -newkey rsa:3072 -days 1 -keyout "$PATH/privkey.pem" -out "$PATH/fullchain.pem" -subj '/CN=localhost'
 
-    echo "> Sleeping 10s to allow NGINX to start"
+    echo "> Initial provisioning, so sleeping 10s to allow NGINX to start"
     /bin/sleep 10s
 
     echo "> Removing dummy certificates from $PATH"
     /bin/rm -rf $PATH
 
     echo "> Requesting TLS certificates into $PATH"
-    /usr/bin/certbot certonly $STAGING --keep-until-expiring --rsa-key-size 3076 --webroot -w /var/www/certbot --email $EMAIL --agree-tos --non-interactive --cert-name $CERTNAME $DOMAINS
+    /usr/bin/certbot certonly $STAGING --keep-until-expiring --rsa-key-size 3072 --webroot -w /var/www/certbot --email $EMAIL --agree-tos --non-interactive --cert-name $CERTNAME $DOMAINS
 
 else
     echo "> $PATH exists, skipping certbot initialization"
