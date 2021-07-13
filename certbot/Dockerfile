@@ -5,9 +5,9 @@
 
 FROM alpine:3.14.0
 
-RUN apk add --no-cache openssl python3 augeas
+RUN apk add --no-cache openssl python3 augeas py3-pip py3-wheel py3-six py3-cryptography
 
-RUN apk add --virtual .build py3-pip musl-dev python3-dev libffi-dev openssl-dev cargo py3-wheel && \
+RUN apk add --virtual .build musl-dev python3-dev libffi-dev openssl-dev cargo  && \
     pip3 --no-cache-dir install certbot && \
     apk del .build
 
