@@ -1,4 +1,7 @@
-version: "2.0"
+# certbot# SPDX-FileCopyrightText: 2021 Kaelan Thijs Fouwels <kaelan.thijs@fouwels.com>
+#
+# SPDX-License-Identifier: MIT
+
 services:
   nginx:
     image: nginx:stable-alpine
@@ -15,7 +18,7 @@ services:
       - "443:443"
       - "80:80"
     networks:
-      - proxynet
+      - proxy_net
 
   certbot:
     mem_limit: 500mb
@@ -24,23 +27,23 @@ services:
     environment:
       EMAIL: "kaelan@fouwels.com"
       DOMAINS: "-d testing.fouwels.app"
-      #STAGING: "--staging" [Enable to run certbot in staging (fake) cert mode, and prevent rate limiting]
+      STAGING: "--staging" #Enable to run certbot in staging (fake) cert mode, and prevent rate limiting
     volumes:
       - certbot_data:/etc/letsencrypt
       - certbot_www:/var/www/certbot
     networks:
-      - proxynet
+      - proxy_net
 
   demo:
     restart: unless-stopped
     mem_limit: 500mb
     image: nginxdemos/hello
     networks:
-      - proxynet
+      - proxy_net
 
 volumes:
   certbot_data:
   certbot_www:
 
 networks:
-  proxynet:
+  proxy_net:
