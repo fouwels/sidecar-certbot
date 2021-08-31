@@ -3,9 +3,25 @@
 # SPDX-License-Identifier: MIT
 
 services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    mem_limit: 500mb
+    volumes:
+      - ./config/nginx:/etc/nginx:ro
+      - certbot_keys:/keys:ro
+      - certbot_www:/var/www/certbot:ro
+    expose:
+      - "443"
+      - "80"
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - proxy_net
+
   certbot:
     mem_limit: 500mb
-    build: .
     image: registry2.lagoni.co.uk/lagoni-engineering/certbot:dev
     environment:
       EMAIL: "kaelan@fouwels.com"
@@ -17,12 +33,19 @@ services:
       - certbot_data:/etc/letsencrypt
       - certbot_www:/var/www/certbot
     networks:
-      - certbot_net
+      - proxy_net
+
+  demo:
+    restart: unless-stopped
+    mem_limit: 500mb
+    image: nginxdemos/hello
+    networks:
+      - proxy_net
 
 volumes:
-  certbot_keys:
   certbot_data:
   certbot_www:
+  certbot_keys:
 
 networks:
-  certbot_net:
+  proxy_net:

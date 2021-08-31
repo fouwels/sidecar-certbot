@@ -8,9 +8,6 @@ STACKFILE= -f compose.yml
 
 .PHONY: pull, up, up-d, down, down-v, logs
 
-# Config
-pull:
-	$(COMPOSE) $(STACKFILE) pull
 up: 
 	$(COMPOSE) $(STACKFILE) up
 up-d: 
@@ -19,8 +16,6 @@ down:
 	$(COMPOSE) $(STACKFILE) down
 down-v:
 	$(COMPOSE) $(STACKFILE) down -v
-logs:
-	$(COMPOSE) $(STACKFILE) logs -f
 build:
 	$(COMPOSE) $(STACKFILE) build
 push:
