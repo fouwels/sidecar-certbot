@@ -4,7 +4,7 @@
 
 FROM alpine:3.14.1
 
-RUN apk add --no-cache openssl certbot
+RUN apk add --no-cache openssl openssl-dev certbot
 
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x ./entrypoint.sh
