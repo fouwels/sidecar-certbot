@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Docker build
-        run: docker build -t ${{env.REGISTRY}}/${{env.REPO}}:${{steps.vars.outputs.TAG}} certbot
+        run: docker build -t ${{env.REGISTRY}}/${{env.REPO}}:${{steps.vars.outputs.TAG}} .
 
       - name: Run container scan
         uses: azure/container-scan@v0
