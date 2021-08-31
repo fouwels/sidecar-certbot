@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-COMPOSE=compose-cli compose
+COMPOSE=docker compose
 STACKFILE= -f compose.yml
 
 .PHONY: pull, up, up-d, down, down-v, logs

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-FROM alpine:3.14.0
+FROM alpine:3.14.1
 
 RUN apk add --no-cache openssl certbot
 

@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 Sidecar container for automatically tls'ing nginx via certbot.
 
-Should be added to an upstream nginx container architecture as per `nginx.yml`, 
+Should be added to an upstream nginx container architecture as per `compose.yml`, 
 
 Container will create dummy certificates on launch, allow nginx to start, and then request a 90 day letsencrypt ACME cert. Container should be perioidally triggered as a daemon to check and renew (if required)
 
